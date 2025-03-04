@@ -3,3 +3,5 @@ obj/
 appsettings.json
 .env
 migrations/
+appsettings.Development.json
+appsettings.Production.json

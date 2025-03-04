@@ -13,10 +13,6 @@ namespace Capstone.Api.Models
         public string LastName { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string UserName { get; set; }
-
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -25,6 +21,9 @@ namespace Capstone.Api.Models
 
         public string? ImageLocation { get; set; }
 
-        public string Role { get; set; } = "user";
+        [Required]
+        public string Role { get; set; }
+
+        public bool IsVerified { get; set; } = false;
     }
 } 

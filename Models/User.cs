@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Capstone.Api.Models
 {
@@ -18,7 +19,8 @@ namespace Capstone.Api.Models
         
         public bool IsVerified { get; set; } = false;
 
-        public DateTime CreateDateTime { get; set; } = DateTime.Now;
+        [Column(TypeName = "timestamp with time zone")]
+        public DateTime CreateDateTime { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.Url)]
         [MaxLength(255)]
