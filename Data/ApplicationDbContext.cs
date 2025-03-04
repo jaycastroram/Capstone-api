@@ -125,16 +125,16 @@ namespace Capstone.Api.Data
             var adminUser = new User
             {
                 Id = "admin-id",
-                UserName = "admin@photography.com",
+                UserName = "admin@photo.com",
                 NormalizedUserName = "ADMIN@PHOTOGRAPHY.COM",
-                Email = "admin@photography.com",
+                Email = "admin@photo.com",
                 NormalizedEmail = "ADMIN@PHOTOGRAPHY.COM",
                 EmailConfirmed = true,
                 Role = "Admin",
                 IsVerified = true,
                 FirstName = "Admin",
                 LastName = "User",
-                CreateDateTime = DateTime.UtcNow,
+                CreateDateTime = DateTime.SpecifyKind(new DateTime(2024, 1, 1), DateTimeKind.Utc),
                 ImageLocation = "https://api.dicebear.com/7.x/avataaars/svg?seed=Admin"
             };
             adminUser.PasswordHash = hasher.HashPassword(adminUser, _configuration["AdminPassword"]);
@@ -155,7 +155,7 @@ namespace Capstone.Api.Data
                     LastName = "Doe",
                     Role = "User",
                     IsVerified = true,
-                    CreateDateTime = DateTime.UtcNow.AddDays(-30),
+                    CreateDateTime = DateTime.SpecifyKind(new DateTime(2024, 2, 1), DateTimeKind.Utc),
                     ImageLocation = "https://api.dicebear.com/7.x/avataaars/svg?seed=John"
                 },
                 new User
@@ -170,8 +170,53 @@ namespace Capstone.Api.Data
                     LastName = "Smith",
                     Role = "Photographer",
                     IsVerified = true,
-                    CreateDateTime = DateTime.UtcNow.AddDays(-60),
+                    CreateDateTime = DateTime.SpecifyKind(new DateTime(2024, 1, 1), DateTimeKind.Utc),
                     ImageLocation = "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane"
+                },
+                new User
+                {
+                    Id = "photographer-id-2",
+                    UserName = "sarah.wilson@example.com",
+                    NormalizedUserName = "SARAH.WILSON@EXAMPLE.COM",
+                    Email = "sarah.wilson@example.com",
+                    NormalizedEmail = "SARAH.WILSON@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Sarah",
+                    LastName = "Wilson",
+                    Role = "Photographer",
+                    IsVerified = true,
+                    CreateDateTime = DateTime.SpecifyKind(new DateTime(2024, 1, 15), DateTimeKind.Utc),
+                    ImageLocation = "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah"
+                },
+                new User
+                {
+                    Id = "photographer-id-3",
+                    UserName = "mike.johnson@example.com",
+                    NormalizedUserName = "MIKE.JOHNSON@EXAMPLE.COM",
+                    Email = "mike.johnson@example.com",
+                    NormalizedEmail = "MIKE.JOHNSON@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Mike",
+                    LastName = "Johnson",
+                    Role = "Photographer",
+                    IsVerified = true,
+                    CreateDateTime = DateTime.SpecifyKind(new DateTime(2024, 2, 1), DateTimeKind.Utc),
+                    ImageLocation = "https://api.dicebear.com/7.x/avataaars/svg?seed=Mike"
+                },
+                new User
+                {
+                    Id = "user-id-2",
+                    UserName = "emma.davis@example.com",
+                    NormalizedUserName = "EMMA.DAVIS@EXAMPLE.COM",
+                    Email = "emma.davis@example.com",
+                    NormalizedEmail = "EMMA.DAVIS@EXAMPLE.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Emma",
+                    LastName = "Davis",
+                    Role = "User",
+                    IsVerified = true,
+                    CreateDateTime = DateTime.SpecifyKind(new DateTime(2024, 2, 15), DateTimeKind.Utc),
+                    ImageLocation = "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma"
                 }
             };
 
@@ -187,10 +232,25 @@ namespace Capstone.Api.Data
                 {
                     Id = 1,
                     UserId = "photographer-id-1",
-                    Name = "Jane Smith",
-                    Bio = "Professional photographer with 10 years of experience",
-                    PortfolioLink = "https://portfolio.example.com/jane",
-                    ContactInfo = "Phone: 555-0123"
+                    Name = "John Doe",
+                    Bio = "Professional photographer with 10 years experience",
+                    PortfolioLink = "https://portfolio.com/johndoe"
+                },
+                new Photographer
+                {
+                    Id = 2,
+                    UserId = "photographer-id-2",
+                    Name = "Sarah Wilson",
+                    Bio = "Specializing in wedding and portrait photography",
+                    PortfolioLink = "https://portfolio.com/sarahwilson"
+                },
+                new Photographer
+                {
+                    Id = 3,
+                    UserId = "photographer-id-3",
+                    Name = "Mike Johnson",
+                    Bio = "Nature and landscape photographer",
+                    PortfolioLink = "https://portfolio.com/mikejohnson"
                 }
             );
 
@@ -200,19 +260,41 @@ namespace Capstone.Api.Data
                 {
                     Id = 1,
                     PhotographerId = 1,
-                    Name = "Wedding Package",
-                    Description = "Complete wedding photography coverage",
-                    Price = 1500.00M,
-                    DurationMinutes = 480
+                    Name = "Wedding Premium",
+                    Description = "Full day wedding coverage with 2 photographers",
+                    Price = 2500M
                 },
                 new Package
                 {
                     Id = 2,
                     PhotographerId = 1,
                     Name = "Portrait Session",
-                    Description = "Professional portrait photography",
-                    Price = 250.00M,
-                    DurationMinutes = 60
+                    Description = "2-hour portrait session with 20 edited photos",
+                    Price = 300M
+                },
+                new Package
+                {
+                    Id = 3,
+                    PhotographerId = 2,
+                    Name = "Event Coverage",
+                    Description = "4-hour event coverage",
+                    Price = 800M
+                },
+                new Package
+                {
+                    Id = 4,
+                    PhotographerId = 3,
+                    Name = "Family Portrait",
+                    Description = "Outdoor family portrait session",
+                    Price = 400M
+                },
+                new Package
+                {
+                    Id = 5,
+                    PhotographerId = 2,
+                    Name = "Mini Session",
+                    Description = "30-minute portrait session",
+                    Price = 150M
                 }
             );
 
@@ -230,6 +312,89 @@ namespace Capstone.Api.Data
                 {
                     RoleId = "admin-role-id",
                     UserId = "admin-id"
+                }
+            );
+
+            // Seed inquiries
+            builder.Entity<Inquiry>().HasData(
+                new Inquiry
+                {
+                    Id = 1,
+                    UserId = "user-id-1",
+                    PhotographerId = 1,
+                    PackageId = 1,
+                    Message = "Interested in wedding photography",
+                    Status = "open",
+                    CreatedAt = DateTime.SpecifyKind(new DateTime(2024, 3, 1), DateTimeKind.Utc)
+                },
+                new Inquiry
+                {
+                    Id = 2,
+                    UserId = "user-id-1",
+                    PhotographerId = 1,
+                    PackageId = 1,
+                    Message = "Looking for engagement photo session",
+                    Status = "open",
+                    CreatedAt = DateTime.SpecifyKind(new DateTime(2024, 3, 1), DateTimeKind.Utc)
+                },
+                new Inquiry
+                {
+                    Id = 3,
+                    UserId = "user-id-2",
+                    PhotographerId = 2,
+                    PackageId = 3,
+                    Message = "Need photographer for corporate event",
+                    Status = "pending",
+                    CreatedAt = DateTime.SpecifyKind(new DateTime(2024, 3, 1), DateTimeKind.Utc)
+                },
+                new Inquiry
+                {
+                    Id = 4,
+                    UserId = "user-id-1",
+                    PhotographerId = 3,
+                    PackageId = 4,
+                    Message = "Interested in family portrait session",
+                    Status = "confirmed",
+                    Response = "Great! Let's schedule for next week",
+                    CreatedAt = DateTime.SpecifyKind(new DateTime(2024, 3, 1), DateTimeKind.Utc)
+                }
+            );
+
+            // Seed bookings
+            builder.Entity<Booking>().HasData(
+                new Booking
+                {
+                    Id = 1,
+                    UserId = "user-id-1",
+                    PackageId = 1,
+                    PhotographerId = 1,
+                    BookingDate = DateTime.SpecifyKind(new DateTime(2024, 3, 15), DateTimeKind.Utc),
+                    Time = new TimeSpan(14, 0, 0),
+                    Status = "confirmed",
+                    TotalAmount = 500.00M,
+                    Notes = "Outdoor session"
+                },
+                new Booking
+                {
+                    Id = 2,
+                    UserId = "user-id-2",
+                    PackageId = 3,
+                    PhotographerId = 2,
+                    BookingDate = DateTime.SpecifyKind(new DateTime(2024, 4, 1), DateTimeKind.Utc),
+                    Time = new TimeSpan(10, 0, 0),
+                    Status = "pending",
+                    TotalAmount = 750.00M,
+                    Notes = "Indoor studio session"
+                },
+                new Booking
+                {
+                    Id = 3,
+                    UserId = "user-id-1",
+                    PackageId = 2,
+                    BookingDate = DateTime.SpecifyKind(new DateTime(2024, 2, 28), DateTimeKind.Utc),
+                    Status = "completed",
+                    TotalAmount = 300M,
+                    Notes = "Portrait session completed"
                 }
             );
         }
